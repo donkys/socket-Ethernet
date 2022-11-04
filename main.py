@@ -9,15 +9,7 @@ SERVERIP = 'localhost'
 clist = [] # Client List
 cdict = {}
 
-from flask import Flask
 
-app = Flask(__name__)
-
-@app.route('/', methods=["GET"])
-def hello_world():
-    return "Hello World"
-
-app.run(debug = True) 
 
 def client_handler(client,addr):
 	while True:
@@ -64,8 +56,9 @@ server.listen(5)
 
 while True:
 	client, addr = server.accept()
+	print("Connection has been established! Port" + str(addr[1]))
 	clist.append(client)
+	
 	print('ALL CLIENT: ', clist)
-
 	task = threading.Thread(target=client_handler, args=(client, addr))
 	task.start()
